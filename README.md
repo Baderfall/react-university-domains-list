@@ -1,3 +1,4 @@
-# React university domail list
+# React university domains list
 
-## `npm start` - to start on http://localhost:3000/
+### `json-server -p 8080 db.json` - start server
+### `npm start` - to start application on http://localhost:3000/
