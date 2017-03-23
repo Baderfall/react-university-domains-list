@@ -10,8 +10,7 @@ let allUniversities = [];
 class App extends Component {
   state = {
     validUniversities: [],
-    displayedUniversities: [],
-    lastDisplayedUniversity: 0,
+    lastDisplayedUnv: 0,
     nameValue: '',
     countryValue: ''
   }
@@ -32,7 +31,7 @@ class App extends Component {
     });
     this.setState({
       validUniversities,
-      displayedUniversities: []
+      lastDisplayedUnv: 0
     });
   }
 
@@ -47,10 +46,10 @@ class App extends Component {
     if (this.state.validUniversities.length === 0) {
       return;
     }
-    let displayedUniversities = this.state.displayedUniversities;
-    displayedUniversities.push(this.state.validUniversities[this.state.lastDisplayedUniversity++]);
+
+    const lastDisplayedUnvUpd = this.state.lastDisplayedUnv + 1;
     this.setState({
-      displayedUniversities
+      lastDisplayedUnv: lastDisplayedUnvUpd
     })
   }
 
@@ -63,7 +62,7 @@ class App extends Component {
         />
         <UniversitiesTable
           validUniversities={this.state.validUniversities}
-          displayedUniversities={this.state.displayedUniversities}
+          lastDisplayedUnv={this.state.lastDisplayedUnv}
           loadItems={this.loadItems}
         />
       </div>

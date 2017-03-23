@@ -5,13 +5,18 @@ import './UniversitiesTable.style.css';
 
 export class UniversitiesTable extends Component {
   render() {
+    const validUniversities = this.props.validUniversities;
+    const lastDisplayedUnv = this.props.lastDisplayedUnv;
+    const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
     const rows = [];
-    const displayedUniversities = this.props.displayedUniversities;
+
     displayedUniversities.forEach((university, index) => {
       rows.push(<UniversityRow key={index} university={university} />);
     });
 
     const loader = <tr><td>Loading ...</td></tr>;
+
+    const hasMore = validUniversities.length > lastDisplayedUnv;
     
     return (
       <table className="universities-table">
@@ -27,7 +32,8 @@ export class UniversitiesTable extends Component {
         <InfiniteScroll
           element={'tbody'}
           loadMore={this.props.loadItems}
-          hasMore={true}
+          hasMore={hasMore}
+          threshold={300}
           loader={loader}>
             {rows}
         </InfiniteScroll>
