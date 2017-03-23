@@ -47,7 +47,6 @@ class App extends Component {
       nameValue,
       countryValue
     });
-    console.log(this.state);
   }
 
   loadItems = () => {
