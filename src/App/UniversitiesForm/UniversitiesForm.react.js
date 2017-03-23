@@ -5,11 +5,11 @@ export const UniversitiesForm = (props) => {
   return (
     <form className="query-form" onSubmit={props.handleSubmit}>
       <input
-        name="nameQuery"
+        name="nameValue"
         placeholder="Name"
       />
       <input
-        name="countryQuery"
+        name="countryValue"
         placeholder="Country"
       />
       <input type="submit" value="Search" />

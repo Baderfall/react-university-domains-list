@@ -11,7 +11,8 @@ class App extends Component {
     universities: [],
     nameValue: '',
     countryValue: '',
-    hideTable: true
+    hideTable: true,
+    errorMessage: ''
   }
 
   componentDidMount() {
@@ -19,21 +20,29 @@ class App extends Component {
       .then(universities => {
         allUniversities = universities;
       })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const nameValue = e.target.children[0].value;
     const countryValue = e.target.children[1].value;
-    this.setState({
-      nameValue: nameValue,
-      countryValue: countryValue,
-      universities: allUniversities,
-      hideTable: false
-    })
+
+    if (nameValue || countryValue) {
+      this.setState({
+        universities: allUniversities,
+        nameValue: nameValue,
+        countryValue: countryValue,
+        hideTable: false,
+        errorMessage: ''
+      })
+    } else {
+      this.setState({
+        nameValue: nameValue,
+        countryValue: countryValue,
+        hideTable: true,
+        errorMessage: 'Please enter a country or university name'
+      })
+    }
   }
 
   render() {
@@ -43,6 +52,7 @@ class App extends Component {
         <UniversitiesForm
           handleSubmit={this.handleSubmit}
         />
+        {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
         <UniversitiesTable
           hidden={this.state.hideTable}
           universities={this.state.universities}
