@@ -1,0 +1,10 @@
+.query-form {
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.query-form input {
+  margin-right: 4px;
+  padding: 4px;
+  font-size: 16px;
+}

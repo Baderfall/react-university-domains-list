@@ -1,4 +1,5 @@
 import React from 'react';
+import './UniversitiesForm.style.css';
 
 export const UniversitiesForm = (props) => {
   return (

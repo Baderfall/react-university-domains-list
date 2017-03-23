@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import React from 'react';
+import './AppHeader.style.css';
 
 export const AppHeader = () => {
   return (

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { UniversityRow } from './UniversityRow/UniversityRow.react';
+import './UniversitiesTable.style.css';
 
 export class UniversitiesTable extends Component {
 
