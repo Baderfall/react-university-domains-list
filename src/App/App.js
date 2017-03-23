@@ -6,6 +6,7 @@ import { UniversitiesTable } from './UniversitiesTable/UniversitiesTable.react';
 import './App.css';
 
 let allUniversities = [];
+
 class App extends Component {
   state = {
     universities: [],
@@ -17,8 +18,8 @@ class App extends Component {
 
   componentDidMount() {
     loadUniversities()
-      .then(universities => {
-        allUniversities = universities;
+      .then(universitiesData => {
+        allUniversities = universitiesData;
       })
   }
 
@@ -35,8 +36,10 @@ class App extends Component {
         hideTable: false,
         errorMessage: ''
       })
+
     } else {
       this.setState({
+        universities: [],
         nameValue: nameValue,
         countryValue: countryValue,
         hideTable: true,

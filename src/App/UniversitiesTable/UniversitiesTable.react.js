@@ -3,7 +3,6 @@ import { UniversityRow } from './UniversityRow/UniversityRow.react';
 import './UniversitiesTable.style.css';
 
 export class UniversitiesTable extends Component {
-
   render() {
     const rows = [];
     const universities = this.props.universities;

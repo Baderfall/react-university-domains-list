@@ -13,6 +13,6 @@ export const UniversitiesForm = (props) => {
         placeholder="Country"
       />
       <input type="submit" value="Search" />
-    </form> 
+    </form>
   );
 }
