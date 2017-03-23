@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
+import InfiniteScroll from 'react-infinite-scroller'
 import { UniversityRow } from './UniversityRow/UniversityRow.react';
 import './UniversitiesTable.style.css';
 
 export class UniversitiesTable extends Component {
   render() {
     const rows = [];
-    const universities = this.props.universities;
-    const nameValue = this.props.nameValue;
-    const countryValue = this.props.countryValue;
-
-    universities.forEach((university, index) => {
-      if (university.name.includes(nameValue) && university.country.includes(countryValue)) {
-        rows.push(<UniversityRow key={index} university={university} />);
-      }
+    const displayedUniversities = this.props.displayedUniversities;
+    displayedUniversities.forEach((university, index) => {
+      rows.push(<UniversityRow key={index} university={university} />);
     });
 
+    const loader = <tr><td>Loading ...</td></tr>;
+    
     return (
-      <table hidden={this.props.hidden} className="universities-table">
+      <table className="universities-table">
         <thead>
           <tr>
             <th>Alpha code</th>
@@ -26,9 +24,13 @@ export class UniversitiesTable extends Component {
             <th>Domain</th>
           </tr>
         </thead>
-        <tbody>
-          {rows}
-        </tbody>
+        <InfiniteScroll
+          element={'tbody'}
+          loadMore={this.props.loadItems}
+          hasMore={true}
+          loader={loader}>
+            {rows}
+        </InfiniteScroll>
       </table> 
     );
   }

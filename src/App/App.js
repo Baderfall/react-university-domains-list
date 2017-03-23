@@ -9,11 +9,11 @@ let allUniversities = [];
 
 class App extends Component {
   state = {
-    universities: [],
+    validUniversities: [],
+    displayedUniversities: [],
+    lastDisplayedUniversity: 0,
     nameValue: '',
-    countryValue: '',
-    hideTable: true,
-    errorMessage: ''
+    countryValue: ''
   }
 
   componentDidMount() {
@@ -21,31 +21,37 @@ class App extends Component {
       .then(universitiesData => {
         allUniversities = universitiesData;
       })
+      .then(() => {
+        this.filterUniversities('', '');
+      });
+  }
+
+  filterUniversities = (nameValue, countryValue) => {
+    const validUniversities = allUniversities.filter(university => {
+      return university.name.includes(nameValue) && university.country.includes(countryValue);
+    });
+    this.setState({
+      validUniversities,
+      displayedUniversities: []
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const nameValue = e.target.children[0].value;
     const countryValue = e.target.children[1].value;
+    this.filterUniversities(nameValue, countryValue);
+  }
 
-    if (nameValue || countryValue) {
-      this.setState({
-        universities: allUniversities,
-        nameValue: nameValue,
-        countryValue: countryValue,
-        hideTable: false,
-        errorMessage: ''
-      })
-
-    } else {
-      this.setState({
-        universities: [],
-        nameValue: nameValue,
-        countryValue: countryValue,
-        hideTable: true,
-        errorMessage: 'Please enter a country or university name'
-      })
+  loadItems = () => {
+    if (this.state.validUniversities.length === 0) {
+      return;
     }
+    let displayedUniversities = this.state.displayedUniversities;
+    displayedUniversities.push(this.state.validUniversities[this.state.lastDisplayedUniversity++]);
+    this.setState({
+      displayedUniversities
+    })
   }
 
   render() {
@@ -55,12 +61,10 @@ class App extends Component {
         <UniversitiesForm
           handleSubmit={this.handleSubmit}
         />
-        {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
         <UniversitiesTable
-          hidden={this.state.hideTable}
-          universities={this.state.universities}
-          nameValue={this.state.nameValue}
-          countryValue={this.state.countryValue}
+          validUniversities={this.state.validUniversities}
+          displayedUniversities={this.state.displayedUniversities}
+          loadItems={this.loadItems}
         />
       </div>
     );
