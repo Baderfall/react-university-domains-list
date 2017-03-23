@@ -21,25 +21,33 @@ class App extends Component {
         allUniversities = universitiesData;
       })
       .then(() => {
-        this.filterUniversities('', '');
+        this.setState({
+          validUniversities: allUniversities
+        });
       });
-  }
-
-  filterUniversities = (nameValue, countryValue) => {
-    const validUniversities = allUniversities.filter(university => {
-      return university.name.includes(nameValue) && university.country.includes(countryValue);
-    });
-    this.setState({
-      validUniversities,
-      lastDisplayedUnv: 0
-    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     const nameValue = e.target.children[0].value;
+    const nameValueLow = nameValue.toLowerCase();
     const countryValue = e.target.children[1].value;
-    this.filterUniversities(nameValue, countryValue);
+    const countryValueLow = countryValue.toLowerCase();
+
+    const validUniversities = allUniversities.filter(university => {
+      const universityNameLow = university.name.toLowerCase();
+      const universityCountryLow = university.country.toLowerCase();
+
+      return universityNameLow.includes(nameValueLow) && universityCountryLow.includes(countryValueLow);
+    });
+    this.setState({
+      validUniversities,
+      lastDisplayedUnv: 0,
+      nameValue,
+      countryValue
+    });
+    console.log(this.state);
   }
 
   loadItems = () => {
