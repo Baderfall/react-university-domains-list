@@ -10,24 +10,24 @@ export class UniversitiesTable extends Component {
 
   componentWillReceiveProps(nextProps) {
     lastDisplayedUnv = 0;
-  }
-
-  loadItems = () => {
-    lastDisplayedUnv++;
-    this.forceUpdate();
-  }
-
-  render() {
-    const allUniversities = this.props.allUniversities;
-    const nameValueLow = this.props.nameValue.toLowerCase();
-    const countryValueLow = this.props.countryValue.toLowerCase();
-    const rows = [];
+    const allUniversities = nextProps.allUniversities;
+    const nameValueLow = nextProps.nameValue.toLowerCase();
+    const countryValueLow = nextProps.countryValue.toLowerCase();
 
     validUniversities = allUniversities.filter(university => {
       const universityNameLow = university.name.toLowerCase();
       const universityCountryLow = university.country.toLowerCase();
       return universityNameLow.includes(nameValueLow) && universityCountryLow.includes(countryValueLow);
     });
+  }
+
+  loadItems = () => {
+    lastDisplayedUnv++;
+    this.forceUpdate();
+  }
+  
+  render() {
+    const rows = [];
 
     const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
 
