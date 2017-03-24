@@ -28,13 +28,14 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+  }
 
-    const nameValue = e.target.children[0].value;
-    const countryValue = e.target.children[1].value;
+  handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
 
     this.setState({
-      nameValue,
-      countryValue
+      [name]: value
     });
   }
 
@@ -44,6 +45,9 @@ class App extends Component {
         <AppHeader />
         <UniversitiesForm
           handleSubmit={this.handleSubmit}
+          handleInputChange={this.handleInputChange}
+          nameValue={this.state.nameValue}
+          countryValue={this.state.countryValue}
         />
         <UniversitiesTable
           allUniversities={allUniversities}

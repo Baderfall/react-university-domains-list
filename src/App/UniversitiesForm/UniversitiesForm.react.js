@@ -7,10 +7,14 @@ export const UniversitiesForm = (props) => {
       <input
         name="nameValue"
         placeholder="Name"
+        value={props.numberOfGuests}
+        onChange={props.handleInputChange}
       />
       <input
         name="countryValue"
         placeholder="Country"
+        value={props.numberOfGuests}
+        onChange={props.handleInputChange}
       />
       <input type="submit" value="Search" />
     </form>
