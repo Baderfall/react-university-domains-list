@@ -10,7 +10,6 @@ export class UniversitiesTable extends Component {
 
   componentWillReceiveProps(nextProps) {
     lastDisplayedUnv = 0;
-    validUniversities = [];
   }
 
   loadItems = () => {
@@ -20,13 +19,16 @@ export class UniversitiesTable extends Component {
 
   render() {
     const allUniversities = this.props.allUniversities;
-    const nameValue = this.props.nameValue;
-    const countryValue = this.props.countryValue;
+    const nameValueLow = this.props.nameValue.toLowerCase();
+    const countryValueLow = this.props.countryValue.toLowerCase();
     const rows = [];
 
     validUniversities = allUniversities.filter(university => {
-      return university.name.includes(nameValue) && university.country.includes(countryValue);
+      const universityNameLow = university.name.toLowerCase();
+      const universityCountryLow = university.country.toLowerCase();
+      return universityNameLow.includes(nameValueLow) && universityCountryLow.includes(countryValueLow);
     });
+
     const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
 
     displayedUniversities.forEach((university, index) => {
@@ -52,7 +54,6 @@ export class UniversitiesTable extends Component {
           element={'tbody'}
           loadMore={this.loadItems}
           hasMore={hasMore}
-          threshold={300}
           loader={loader}>
             {rows}
         </InfiniteScroll>
