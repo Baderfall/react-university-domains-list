@@ -3,12 +3,31 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { UniversityRow } from './UniversityRow/UniversityRow.react';
 import './UniversitiesTable.style.css';
 
+let lastDisplayedUnv = 0;
+let validUniversities = [];
+
 export class UniversitiesTable extends Component {
+
+  componentWillReceiveProps(nextProps) {
+    lastDisplayedUnv = 0;
+    validUniversities = [];
+  }
+
+  loadItems = () => {
+    lastDisplayedUnv++;
+    this.forceUpdate();
+  }
+
   render() {
-    const validUniversities = this.props.validUniversities;
-    const lastDisplayedUnv = this.props.lastDisplayedUnv;
-    const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
+    const allUniversities = this.props.allUniversities;
+    const nameValue = this.props.nameValue;
+    const countryValue = this.props.countryValue;
     const rows = [];
+
+    validUniversities = allUniversities.filter(university => {
+      return university.name.includes(nameValue) && university.country.includes(countryValue);
+    });
+    const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
 
     displayedUniversities.forEach((university, index) => {
       rows.push(<UniversityRow key={index} university={university} />);
@@ -31,7 +50,7 @@ export class UniversitiesTable extends Component {
         </thead>
         <InfiniteScroll
           element={'tbody'}
-          loadMore={this.props.loadItems}
+          loadMore={this.loadItems}
           hasMore={hasMore}
           threshold={300}
           loader={loader}>

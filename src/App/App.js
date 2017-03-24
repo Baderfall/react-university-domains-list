@@ -9,8 +9,6 @@ let allUniversities = [];
 
 class App extends Component {
   state = {
-    validUniversities: [],
-    lastDisplayedUnv: 0,
     nameValue: '',
     countryValue: ''
   }
@@ -22,7 +20,8 @@ class App extends Component {
       })
       .then(() => {
         this.setState({
-          validUniversities: allUniversities
+          nameValue: '',
+          countryValue: '',
         });
       });
   }
@@ -31,33 +30,12 @@ class App extends Component {
     e.preventDefault();
 
     const nameValue = e.target.children[0].value;
-    const nameValueLow = nameValue.toLowerCase();
     const countryValue = e.target.children[1].value;
-    const countryValueLow = countryValue.toLowerCase();
 
-    const validUniversities = allUniversities.filter(university => {
-      const universityNameLow = university.name.toLowerCase();
-      const universityCountryLow = university.country.toLowerCase();
-
-      return universityNameLow.includes(nameValueLow) && universityCountryLow.includes(countryValueLow);
-    });
     this.setState({
-      validUniversities,
-      lastDisplayedUnv: 0,
       nameValue,
       countryValue
     });
-  }
-
-  loadItems = () => {
-    if (this.state.validUniversities.length === 0) {
-      return;
-    }
-
-    const lastDisplayedUnvUpd = this.state.lastDisplayedUnv + 1;
-    this.setState({
-      lastDisplayedUnv: lastDisplayedUnvUpd
-    })
   }
 
   render() {
@@ -68,9 +46,9 @@ class App extends Component {
           handleSubmit={this.handleSubmit}
         />
         <UniversitiesTable
-          validUniversities={this.state.validUniversities}
-          lastDisplayedUnv={this.state.lastDisplayedUnv}
-          loadItems={this.loadItems}
+          allUniversities={allUniversities}
+          nameValue={this.state.nameValue}
+          countryValue={this.state.countryValue}
         />
       </div>
     );
