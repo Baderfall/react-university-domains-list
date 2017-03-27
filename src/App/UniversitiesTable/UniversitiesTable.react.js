@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller'
 import { UniversityRow } from './UniversityRow/UniversityRow.react';
+import { includesLow } from './../services';
 import './UniversitiesTable.style.css';
 
 let lastDisplayedUnv = 0;
@@ -11,33 +12,29 @@ export class UniversitiesTable extends Component {
   componentWillReceiveProps(nextProps) {
     lastDisplayedUnv = 0;
     const allUniversities = nextProps.allUniversities;
-    const nameValueLow = nextProps.nameValue.toLowerCase();
-    const countryValueLow = nextProps.countryValue.toLowerCase();
+    const nameValue = nextProps.nameValue;
+    const countryValue = nextProps.countryValue;
 
     validUniversities = allUniversities.filter(university => {
-      const universityNameLow = university.name.toLowerCase();
-      const universityCountryLow = university.country.toLowerCase();
-      return universityNameLow.includes(nameValueLow) && universityCountryLow.includes(countryValueLow);
+      return includesLow(university.name, nameValue) && includesLow(university.country, countryValue);
     });
   }
 
-  loadItems = () => {
+  displayMoreItems = () => {
     lastDisplayedUnv++;
     this.forceUpdate();
   }
   
   render() {
-    const rows = [];
-
+    const loader = <tr><td>Loading ...</td></tr>;
+    const hasMore = validUniversities.length > lastDisplayedUnv;
     const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
+    const rows = [];
 
     displayedUniversities.forEach((university, index) => {
       rows.push(<UniversityRow key={index} university={university} />);
     });
 
-    const loader = <tr><td>Loading ...</td></tr>;
-
-    const hasMore = validUniversities.length > lastDisplayedUnv;
     
     return (
       <table className="universities-table">
@@ -52,7 +49,7 @@ export class UniversitiesTable extends Component {
         </thead>
         <InfiniteScroll
           element={'tbody'}
-          loadMore={this.loadItems}
+          loadMore={this.displayMoreItems}
           hasMore={hasMore}
           loader={loader}>
             {rows}

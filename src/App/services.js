@@ -1,6 +1,10 @@
-const baseUrl = 'http://localhost:8080/universities';
-
-export const loadUniversities = () => {
-  return fetch(baseUrl)
+export const loadJSON = (url) => {
+  return fetch(url)
     .then(response => response.json())
+};
+
+export const includesLow = (baseStr, searchStr) => {
+  const baseStrLow = baseStr.toLowerCase();
+  const searchStrLow = searchStr.toLowerCase();
+  return baseStrLow.includes(searchStrLow);
 };

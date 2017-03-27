@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { loadUniversities } from './services';
+import { loadJSON } from './services';
 import { AppHeader } from './AppHeader/AppHeader.react';
 import { UniversitiesForm } from './UniversitiesForm/UniversitiesForm.react';
 import { UniversitiesTable } from './UniversitiesTable/UniversitiesTable.react';
 import './App.css';
 
+const baseUrl = 'http://localhost:8080/universities';
 let allUniversities = [];
 
 class App extends Component {
@@ -14,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    loadUniversities()
+    loadJSON(baseUrl)
       .then(universitiesData => {
         allUniversities = universitiesData;
       })
