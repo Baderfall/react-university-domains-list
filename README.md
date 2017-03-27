@@ -1,4 +1,4 @@
 # React university domains list
 
-### `json-server -p 8080 db.json` - start server
-### `npm start` - start application on http://localhost:3000/
+Install [Allow-Control-Allow-Origin: *](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?utm_source=InfinityNewtab) plugin.
+`npm start` - start application on http://localhost:3000/

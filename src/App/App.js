@@ -5,7 +5,7 @@ import { UniversitiesForm } from './UniversitiesForm/UniversitiesForm.react';
 import { UniversitiesTable } from './UniversitiesTable/UniversitiesTable.react';
 import './App.css';
 
-const baseUrl = 'http://localhost:8080/universities';
+const baseUrl = 'http://universities.hipolabs.com/search';
 let allUniversities = [];
 
 class App extends Component {
@@ -16,19 +16,15 @@ class App extends Component {
 
   componentDidMount() {
     loadJSON(baseUrl)
-      .then(universitiesData => {
-        allUniversities = universitiesData;
-      })
-      .then(() => {
-        this.setState({
-          nameValue: '',
-          countryValue: '',
-        });
+      .then(data => {
+        allUniversities = data;
+        this.forceUpdate();
       });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.forceUpdate();
   }
 
   handleInputChange = (e) => {
