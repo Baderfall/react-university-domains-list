@@ -22,7 +22,7 @@ export class UniversitiesTable extends Component {
 
   displayMoreItems = () => {
     const addPerReflow = 5;
-    lastDisplayedUnv+=addPerReflow;
+    lastDisplayedUnv += addPerReflow;
     this.forceUpdate();
   }
   
@@ -36,7 +36,6 @@ export class UniversitiesTable extends Component {
       rows.push(<UniversityRow key={index} university={university} />);
     });
 
-    
     return (
       <table className="universities-table">
         <thead>
