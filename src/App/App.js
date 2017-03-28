@@ -27,6 +27,9 @@ class App extends Component {
     loadJSON(allUnvUrl)
       .then(data => {
         allUniversities = data;
+        if (this.state.nameValue || this.state.countryValue) {
+          this.forceUpdate();
+        }
       });
   }
 
