@@ -21,7 +21,8 @@ export class UniversitiesTable extends Component {
   }
 
   displayMoreItems = () => {
-    lastDisplayedUnv++;
+    const addPerReflow = 5;
+    lastDisplayedUnv+=addPerReflow;
     this.forceUpdate();
   }
   
