@@ -3,9 +3,9 @@ import { loadJSON } from './services';
 import { AppHeader } from './AppHeader/AppHeader.react';
 import { UniversitiesForm } from './UniversitiesForm/UniversitiesForm.react';
 import { UniversitiesTable } from './UniversitiesTable/UniversitiesTable.react';
+import { constants } from './constants';
 import './App.css';
 
-const baseUrl = 'http://universities.hipolabs.com/search';
 let allUniversities = [];
 
 class App extends Component {
@@ -15,10 +15,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    loadJSON(baseUrl)
+    const criticalUnvUrl = constants.USA_UNIVERSITIES_URL;
+    const allUnvUrl = constants.ALL_UNIVERSITIES_URL;
+    
+    loadJSON(criticalUnvUrl)
       .then(data => {
         allUniversities = data;
         this.forceUpdate();
+      });
+
+    loadJSON(allUnvUrl)
+      .then(data => {
+        allUniversities = data;
       });
   }
 
