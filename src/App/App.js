@@ -18,18 +18,15 @@ class App extends Component {
     const criticalUnvUrl = constants.USA_UNIVERSITIES_URL;
     const allUnvUrl = constants.ALL_UNIVERSITIES_URL;
     
-    loadJSON(criticalUnvUrl)
+    this.loadUniversities(criticalUnvUrl);
+    this.loadUniversities(allUnvUrl);
+  }
+
+  loadUniversities(url) {
+    loadJSON(url)
       .then(data => {
         allUniversities = data;
         this.forceUpdate();
-      });
-
-    loadJSON(allUnvUrl)
-      .then(data => {
-        allUniversities = data;
-        if (this.state.nameValue || this.state.countryValue) {
-          this.forceUpdate();
-        }
       });
   }
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import InfiniteScroll from 'react-infinite-scroller'
+import InfiniteScroll from 'react-infinite-scroller';
 import { UniversityRow } from './UniversityRow/UniversityRow.react';
 import { includesLow } from './../services';
+import { constants } from './../constants';
 import './UniversitiesTable.style.css';
 
 let lastDisplayedUnv = 0;
@@ -10,24 +11,18 @@ let validUniversities = [];
 export class UniversitiesTable extends Component {
 
   componentWillReceiveProps(nextProps) {
-    lastDisplayedUnv = 0;
-    const allUniversities = nextProps.allUniversities;
-    const nameValue = nextProps.nameValue;
-    const countryValue = nextProps.countryValue;
-
-    validUniversities = allUniversities.filter(university => {
-      return includesLow(university.name, nameValue) && includesLow(university.country, countryValue);
+    validUniversities = nextProps.allUniversities.filter(university => {
+      return includesLow(university.name, nextProps.nameValue) &&
+        includesLow(university.country, nextProps.countryValue);
     });
   }
 
   displayMoreItems = () => {
-    const addPerReflow = 5;
-    lastDisplayedUnv += addPerReflow;
+    lastDisplayedUnv += constants.ADD_ON_EACH_CALLBACK;
     this.forceUpdate();
   }
   
   render() {
-    const loader = <tr><td>Loading ...</td></tr>;
     const hasMore = validUniversities.length > lastDisplayedUnv;
     const displayedUniversities = validUniversities.slice(0, lastDisplayedUnv);
     const rows = [];
@@ -50,8 +45,7 @@ export class UniversitiesTable extends Component {
         <InfiniteScroll
           element={'tbody'}
           loadMore={this.displayMoreItems}
-          hasMore={hasMore}
-          loader={loader}>
+          hasMore={hasMore}>
             {rows}
         </InfiniteScroll>
       </table> 
